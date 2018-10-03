@@ -1,1 +1,1 @@
-# tera-datascience-out2018
+# Repositório da turma de outubro do Bootcamp de Data Science & Machine Learning for Business da Tera

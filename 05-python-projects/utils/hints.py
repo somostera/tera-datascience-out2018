@@ -11,7 +11,7 @@ class Helper:
             backup_filename = 'utils/.hints_taken'
         self.backup_filename = backup_filename
         self.hints_taken = self._load_hints_taken()
-        
+       
     def _load_hints_taken(self):
         if os.path.exists(self.backup_filename):
             with open(self.backup_filename, 'r') as f:
@@ -55,4 +55,4 @@ class Helper:
 
 def give_me_a_hint(exercise):
     hint_msg = Helper().get_hint_msg(exercise)
-    printmd(hint_msg)   
+    printmd(hint_msg)

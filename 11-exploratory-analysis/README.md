@@ -6,8 +6,8 @@ em português - https://www.inf.ufsc.br/~andre.zibetti/probabilidade/teste-de-hi
 
 
 em inglês - https://onlinecourses.science.psu.edu/stat500/node/41/
-vídeo 
-	  - https://www.khanacademy.org/math/statistics-probability/significance-tests-one-sample/more-significance-testing-videos/v/hypothesis-testing-and-p-values?utm_account=Grant&utm_campaignname=Grant_Math_Dynamic&gclid=Cj0KCQjw08XeBRC0ARIsAP_gaQDMptXoIAZYezaBvRs65o0MGZA1eCZSyJIGDtRpy_Sl8W2Nu7jxzDEaAr0HEALw_wcB
+
+vídeo - https://www.khanacademy.org/math/statistics-probability/significance-tests-one-sample/more-significance-testing-videos/v/hypothesis-testing-and-p-values?utm_account=Grant&utm_campaignname=Grant_Math_Dynamic&gclid=Cj0KCQjw08XeBRC0ARIsAP_gaQDMptXoIAZYezaBvRs65o0MGZA1eCZSyJIGDtRpy_Sl8W2Nu7jxzDEaAr0HEALw_wcB
 
 ______________________________
 Pós-aula

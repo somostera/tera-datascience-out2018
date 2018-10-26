@@ -1,4 +1,8 @@
-﻿Aula 11 -  Análise Exploratória
+
+
+
+
+Aula 11 -  Análise Exploratória
 ______________________________
 Pré-aula (3 opções, apenas 1 é obrigatória)
 
@@ -23,3 +27,5 @@ ______________________________
 Pós-aula APROFUNDADO
 
 https://www.stat.cmu.edu/~hseltman/309/Book/chapter4.pdf
+
+

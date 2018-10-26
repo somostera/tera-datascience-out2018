@@ -1,6 +1,6 @@
 ﻿Aula 11 -  Análise Exploratória
 ______________________________
-Pré-aula
+Pré-aula (3 opções, apenas 1 é obrigatória)
 
 em português - https://www.inf.ufsc.br/~andre.zibetti/probabilidade/teste-de-hipoteses.html#introdu%C3%A7%C3%A3o
 

@@ -27,14 +27,16 @@ df = pd.read_csv('kaggle-survey-2017/multipleChoiceResponses.csv', encoding="ISO
 
 
 #Countplot com MajorSelect
+_ = sns.countplot(y='MajorSelect', data=df, palette="Greens_d").set_title("Count Major")
 
 
 # Para ficar mais facil de ver podemos ordenar as barras
 
-# In[8]:
+# In[14]:
 
 
 # ordene o eixo y
+_ = sns.countplot(y='MajorSelect', data=df, palette="Greens_d", order=df['MajorSelect'].value_counts().index) .set_title("Count Major")
 
 
 # Agora ficou bem mais fácil de tirar conclusões sobre os cursos.
@@ -45,10 +47,12 @@ df = pd.read_csv('kaggle-survey-2017/multipleChoiceResponses.csv', encoding="ISO
 
 # ### Qual o maior grau de educação dos cientistas de dados?
 
-# In[9]:
+# In[15]:
 
 
 # Use o campo FormalEducation
+_ = sns.countplot(y = 'FormalEducation', data=df, palette="Greens_d", 
+                  order=df['FormalEducation'].value_counts().index).set_title("Count Major")
 
 
 # ### Desafio 2
@@ -60,8 +64,58 @@ df = pd.read_csv('kaggle-survey-2017/multipleChoiceResponses.csv', encoding="ISO
 
 # ![finn_mathematical](https://media.giphy.com/media/ccQ8MSKkjHE2c/giphy.gif)
 
-# In[10]:
+# In[22]:
+
+
+df['PastJobTitlesSelect'].value_counts()
+
+
+# In[20]:
 
 
 # Resolva o desafio aqui
+print(df['PastJobTitlesSelect'][0])
+print(re.sub(r'(?=,).*', '', df['PastJobTitlesSelect'][0]))
+
+
+# In[24]:
+
+
+df['PastJobTitlesSelect'] = df['PastJobTitlesSelect'].fillna('NULL')
+
+
+# In[ ]:
+
+
+past_job_category = []
+for s in df['PastJobTitlesSelect']:
+    past_job_category.append(re.sub(r'(?=,).*', '', s))
+    
+df['PastJobTitles'] = past_job_category
+
+
+# In[30]:
+
+
+df['PastJobTitles'] = df['PastJobTitlesSelect'].apply(lambda x: re.sub(r'(?=,).*', '', x))
+
+
+# In[31]:
+
+
+df[['PastJobTitles', 'PastJobTitlesSelect']].head(5)
+
+
+# In[32]:
+
+
+df['PastJobTitles'].value_counts()
+
+
+# In[33]:
+
+
+_ = sns.countplot(y = "PastJobTitles", 
+                  data=df, 
+                  order=df["PastJobTitles"].value_counts().index).set_title("Previous job category")
 

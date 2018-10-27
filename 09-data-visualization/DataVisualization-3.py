@@ -23,50 +23,63 @@ df = pd.read_csv('kaggle-survey-2017/multipleChoiceResponses.csv', encoding="ISO
 
 # ### Será que o trabalho remoto impacta no tempo que um cientista passa coletando dados?
 
-# In[11]:
+# In[3]:
 
 
 # Vamos ver as categorias da variável RemoteWork
+df['RemoteWork'].value_counts()
 
 
-# In[12]:
+# In[4]:
 
 
 # Vamos ver as categorias da variável TimeGatheringData
+df['TimeGatheringData'].value_counts()
 
 
-# In[13]:
+# In[7]:
+
+
+df['TimeGatheringData'] = df['TimeGatheringData'].fillna(-1)
+
+
+# In[8]:
 
 
 # Agora vamos usar o swarplot. Ele pode demorar um pouquinho...
+sns.swarmplot(x="RemoteWork", y="TimeGatheringData", data=df)
 
 
 # Parece que não muda muito... 
 
 # ### E se eu quiser saber se o tempo que a pessoa passa gerando visualizações impacta no tempo que ela gasta em visualização em um projeto?
 
-# In[14]:
+# In[10]:
 
 
-# Vamos ver as categorias da variável WorkToolsSelect
+# WorkDataVisualizations
+df['WorkDataVisualizations'].value_counts()
 
 
-# In[15]:
+# In[13]:
 
 
 # Agora vamos preencher os nulos com o valor 'NULL'
+df['WorkDataVisualizations'] = df['WorkDataVisualizations'].fillna('NULL')
+work_visualization = []
+for s in df['WorkDataVisualizations']:
+    work_visualization.append(re.sub(' of projects', '', s))
+    
+df['work_visualization'] = work_visualization
 
 
-# In[16]:
-
-
-# Podemos substituir o pedaço ' of projects' da string original para o nosso gráfico ficar mais limpo
-
-
-# In[17]:
+# In[14]:
 
 
 # Vamos verificar os novos valores mais limpos agora
+_ = sns.swarmplot(x='work_visualization', y="TimeVisualizing", data=df,
+             order=['100%', '51-75%', '26-50%', '10-25%', 
+                    'Less than 10%', 'None', 'NULL'])
 
 
 # In[18]:
@@ -91,8 +104,32 @@ df = pd.read_csv('kaggle-survey-2017/multipleChoiceResponses.csv', encoding="ISO
 
 # ![crazy_finn](https://media.giphy.com/media/KI9oNS4JBemyI/giphy.gif)
 
-# In[19]:
+# In[16]:
 
 
 # Resolva o desafio aqui
+import numpy as np
+
+sns.set(style="white")
+
+# Generate a large random dataset
+d = df[['TimeGatheringData', 'TimeVisualizing', 'TimeModelBuilding', 
+        'TimeFindingInsights', 'TimeProduction']]
+
+# Compute the correlation matrix
+corr = d.corr()
+
+# Generate a mask for the upper triangle
+mask = np.zeros_like(corr, dtype=np.bool)
+mask[np.triu_indices_from(mask)] = True
+
+# Set up the matplotlib figure
+f, ax = plt.subplots(figsize=(11, 9))
+
+# Generate a custom diverging colormap
+cmap = sns.diverging_palette(220, 10, as_cmap=True)
+
+# Draw the heatmap with the mask and correct aspect ratio
+sns.heatmap(corr, mask=mask, cmap=cmap, vmax=.3, center=0,
+            square=True, linewidths=.5, cbar_kws={"shrink": .5})
 

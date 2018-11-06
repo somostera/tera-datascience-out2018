@@ -33,3 +33,4 @@ dependencies:
   - boto=2.48.0
   - boto3=1.7.45
   - botocore=1.10.45
+  - shap=0.24.0

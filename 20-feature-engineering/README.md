@@ -16,7 +16,7 @@ Essa aula será **Totalmente Hands-On**, portanto tragam o Notebook (com o carre
 ## Material de referência
 
 ### Pré-Aula:
-1. Apresentação sobre Feature Engineering por HJvanVeen: https://pt.slideshare.net/HJvanVeen/feature-engineering-72376750
+1. Apresentação sobre Feature Engineering por HJ van Veen: https://pt.slideshare.net/HJvanVeen/feature-engineering-72376750
 2. Conceitos básicos utilizadas na aula:
  - [Pipeline](http://michelleful.github.io/code-blog/2015/06/20/pipelines/)
  - [Imputer](https://chrisalbon.com/machine_learning/preprocessing_structured_data/impute_missing_values_with_means/)

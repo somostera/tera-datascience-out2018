@@ -16,6 +16,11 @@ def calculate_outliers(X):
     # defina os cortes a serem aplicados na massa de treino
     cuts_list = [
         # (feat, lim_inf, lim_sup),
+        ("log_of_total_rooms", 5, 10),
+        ("log_of_total_bedrooms", 4, 8),
+        ("log_of_population", 5, 9),
+        ("log_of_households", 4, 8),
+        ("log_of_median_income", -.5, 2.7)
     ]
     # exercício - FIM
     

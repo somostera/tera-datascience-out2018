@@ -23,23 +23,16 @@ class NumericalFeaturesImputer(BaseEstimator, TransformerMixin):
     """
     
     def __init__(self, columns):
-        # exercício - INI  
-        # >> Crie o Imputer com a configuração correta
-        self.imputer = None
-        # exercício - FIM
+        self.imputer = Imputer(strategy="median")
         self.columns = columns
         
     def fit(self, X, y=None, **fit_params):
-        # exercício - INI        
-        ## >> treine o Imputer apenas com as features desejadas
-        # exercício - FIM
+        self.imputer.fit(X.loc[:, self.columns])
         return self
     
     def transform(self, X):
         X_t = X.copy()
-        # exercício - INI        
-        ## >> Atualize os valores nulos de X_t, apenas nas features desejadas, usando o Imputer
-        # exercício - FIM
+        X_t.loc[:, self.columns] = self.imputer.transform(X_t.loc[:, self.columns])
         return X_t
 
     
@@ -61,11 +54,7 @@ class LogFeaturesTransform(BaseEstimator, TransformerMixin):
         return self
     
     def transform(self, X):
-        X_t = X.copy()        
-        # exercício - INI        
-        ## >> Aplique a função correta nos valores de X_t, apenas nas features desejadas
-        ## >> Renomeie as colunasde X_t, apenas nas features desejadas, para o padrão mostrado no notebook
-        # exercício - FIM
+        X_t = X[self.columns].apply(np.log).rename(columns=lambda c: f"log_of_{c}")
         return X.join(X_t)
 
     
@@ -88,26 +77,31 @@ class CategoricalFeaturesImputer(BaseEstimator, TransformerMixin):
     
     def __init__(self, valid_categories):
         self.valid_categories = valid_categories
-        # exercício - INI  
-        # >> Crie o Imputer com a configuração correta
-        self.imputer = None
-        # exercício - FIM
+        self.imputer = LogisticRegression(
+            max_iter=1000,
+            solver="newton-cg", 
+            multi_class="multinomial"
+        )
         
     def fit(self, X, y=None, **fit_params):
-        target_feat = "ocean_proximity"          # valor a ser estimado
-        inputs_cols = ["latitude", "longitude"]  # features a serem utilizadas
-        # exercício - INI        
-        ## >> treine o Imputer 
-        # exercício - FIM
+        target_feat = "ocean_proximity"
+        inputs_cols = ["latitude", "longitude"]
+        
+        index = X[target_feat].isin(self.valid_categories)
+        
+        x_train = X.loc[index, inputs_cols]
+        y_train = X.loc[index, target_feat]
+        
+        self.imputer.fit(x_train, y_train)
         return self
     
     def transform(self, X):
-        target_feat = "ocean_proximity"          # valor a ser estimado
-        inputs_cols = ["latitude", "longitude"]  # features a serem utilizadas
+        target_feat = "ocean_proximity"
+        inputs_cols = ["latitude", "longitude"]
+        
         X_t = X.copy()
-        # exercício - INI        
-        ## >> estime o valor desejado apenas onde ele é nulo 
-        # exercício - FIM
+        index = X_t[target_feat].isnull()
+        X_t.loc[index, target_feat] = self.imputer.predict(X_t.loc[index, inputs_cols])
         return X_t
 
     
@@ -130,14 +124,12 @@ class CategoricalToDummyFeaturesTransform(BaseEstimator, TransformerMixin):
     
     def transform(self, X):        
         X_t = X.drop("ocean_proximity", axis=1)
-        categories = X["ocean_proximity"]
         
-        # exercício - INI        
-        ## >> transforme `categories` em dummies (formato de DataFrame)
-        ##    e armazene a resposta na variável `dummy` 
-        dummy = None
-        # exercício - FIM
-        
+        dummy = pd.get_dummies(
+            X["ocean_proximity"], 
+            prefix="ocean_proximity",
+            prefix_sep=": "
+        ) 
         return X_t.join(dummy.loc[:, self.categories])
 
 
@@ -163,12 +155,15 @@ class ManuallyCraftedFeaturesTransform(BaseEstimator, TransformerMixin):
     def transform(self, X):        
         X_t = X.copy()
         
-        # exercício - INI        
-        # >> repita a linha abaixo para cada transformação
-        #  ... 
-        #     X_t.loc[:, "nome da nova feature"] = <combinação de features>
-        #  ...
-        # exercício - FIM        
+        # Início das transformações manuais; 
+        # repita as linhas abaixo para cada transformação
+        
+        X_t.loc[:, "bedrooms per rooms"] = X_t.total_bedrooms / X_t.total_rooms
+        X_t.loc[:, "bedrooms per house"] = X_t.total_bedrooms / X_t.households
+        X_t.loc[:, "rooms per house"] = X_t.total_rooms / X_t.households
+        X_t.loc[:, "people per house"] = X_t.population / X_t.households
+        
+        # Fim das transformações
         
         return X_t
 
@@ -193,14 +188,14 @@ class PolynomialFeaturesTransform(BaseEstimator, TransformerMixin):
         return self
     
     def transform(self, X):        
-        X_t = X.drop(self.features, axis=1)        
-        X_t = X.copy()
+        X_t = X.drop(self.features, axis=1)
         
-        # exercício - INI        
-        # >> Use a função de transformação corretamente e armazene o resultado em `x_poli`
-        # >> Gere nomes descritivos para as features geradas (nas colunas)
-        x_poli = None
-        # exercício - FIM        
+        x_poli = pd.DataFrame(
+            index=X.index,
+            columns=self.polifeat.get_feature_names(self.features),
+            data=self.polifeat.transform(X[self.features])
+            
+        )
         
         return X_t.join(x_poli)
 
@@ -232,10 +227,9 @@ class PointsOfInterestFeaturesTransform(BaseEstimator, TransformerMixin):
         X_t = X.copy()        
         x_poi = pd.DataFrame(index=X_t.index)        
         for k in self.poi:
-            # exercício - INI        
-            # >> para cada local de interesse, calcule a distância à lat/lon do elemento
-            x_poi.loc[:, f"Distance to {k}"] = None
-            # exercício - FIM    
+            distance_lat = (X_t.latitude - self.poi[k][0]) ** 2
+            distance_lon = (X_t.longitude - self.poi[k][1]) ** 2
+            x_poi.loc[:, f"Distance to {k}"] = (distance_lat + distance_lon) ** 0.5
         return X_t.join(x_poi)
 
 

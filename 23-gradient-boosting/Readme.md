@@ -2,6 +2,6 @@
 
 ## Pré-aula
 
-- [Extreme Gradient Boosting with XGBoost](https://www.datacamp.com/courses/extreme-gradient-boosting-with-xgboost) (DataCamp)
+- Capítulos 1-3 de [Extreme Gradient Boosting with XGBoost](https://www.datacamp.com/courses/extreme-gradient-boosting-with-xgboost) (DataCamp)
 
-- [Gradient Descent For Machine Learning](https://machinelearningmastery.com/gradient-descent-for-machine-learning)
+- Blog post: [Gradient Descent For Machine Learning](https://machinelearningmastery.com/gradient-descent-for-machine-learning)

@@ -10,20 +10,20 @@ Nessa aula, vamos aprender sobre processamento de linguagem natural (NLP) atrav�
 
 Para essa aula, o ideal é que vocês instalem os recursos mencionados abaixo pois, sem eles, será difícil acompanhar a aula.
 
+Foram adicionados novos pacotes no _environment_ da Tera. Para que eles funcionem, você deve recriar o _environment_.
+
+* `conda env remove -n tera-out2018`
+
+* `git pull`
+
+* `conda env create -f tera-out2018.yml`
+
+* `source activate tera-out2018`
+
 ### Spacy
 
-Instalar modelo `en_core_web_sm`:
+Já dentro do _env_, instalar modelo `en_core_web_sm`:
 
 * `python -m spacy download en_core_web_sm`
 
-### ipywidgets
-
-Instalar `ipywidgets` no `jupyter lab`:
-
-* `conda install -c conda-forge -y ipywidgets nodejs==8.12.0`
-
-* `jupyter labextension install @jupyter-widgets/jupyterlab-manager@0.34`
-
-Se o comando de instalar a extensão no jupyter não funcionar, rodar o comando `jupyter lab --version` para checar a versão e escolher o comando apropriado na [página do github do jupyter-widgets](https://github.com/jupyter-widgets/ipywidgets/tree/master/packages/jupyterlab-manager#version-compatibility).
-
-Nota: Caso deseje, você pode rodar os comandos diretamente da célula do `jupyter notebook`, adicionando uma exclamação na frente do comando (e.g. `!ls`). Nunca testei tentar instalar a extensão com o `jupyter` aberto; é possível que essa operação não funcione.
+Observação: pode acontecer de ao instalar, aparecer um erro ao criar o link simbólico (_symlink_) para a pasta de dados do `spacy`. Isso, porém, não impede que usemos o modelo. Basta que importemos o modelo como se fosse um módulo. Leia mais no [github do spacy](https://github.com/explosion/spaCy/issues/915).

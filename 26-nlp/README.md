@@ -26,4 +26,6 @@ Já dentro do _env_, instalar modelo `en_core_web_sm`:
 
 * `python -m spacy download en_core_web_sm`
 
-Observação: pode acontecer de ao instalar, aparecer um erro ao criar o link simbólico (_symlink_) para a pasta de dados do `spacy`. Isso, porém, não impede que usemos o modelo. Basta que importemos o modelo como se fosse um módulo. Leia mais no [github do spacy](https://github.com/explosion/spaCy/issues/915).
+Observação 1: Caso deseje, você pode rodar os comandos diretamente da célula do jupyter notebook, adicionando uma exclamação na frente do comando (e.g. !ls).
+
+Observação 2: pode acontecer de ao instalar, aparecer um erro ao criar o link simbólico (_symlink_) para a pasta de dados do `spacy`. Isso, porém, não impede que usemos o modelo. Basta que importemos o modelo como se fosse um módulo. Leia mais no [github do spacy](https://github.com/explosion/spaCy/issues/915).
